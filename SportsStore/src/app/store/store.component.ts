@@ -2,6 +2,7 @@ import {ProductRepository} from '../model/product.repository';
 import {Product} from '../model/product.model';
 import {Component} from '@angular/core';
 import {Cart} from '../model/cart.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'store',
@@ -12,7 +13,9 @@ export class StoreComponent {
   public productsPerPage = 4;
   public selectedPage = 1;
 
-  constructor(private repository: ProductRepository, private cart: Cart) {  }
+  constructor(private repository: ProductRepository,
+              private cart: Cart,
+              private router: Router) {  }
 
   get products(): Product[] {
     const pageIndex = (this.selectedPage - 1) * this.productsPerPage;
@@ -44,5 +47,6 @@ export class StoreComponent {
 
   addProductToCart(product: Product) {
     this.cart.addLine(product);
+    this.router.navigateByUrl('/cart');
   }
 }
